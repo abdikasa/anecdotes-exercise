@@ -1,10 +1,29 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-const App = (props) => {
+// 1.12*: anecdotes step1
+// The world of software engineering is filled with anecdotes that distill timeless truths from our field into short one-liners.
+
+// Expand the following application by adding a button that can be clicked to display a random anecdote from the field of software engineering:
+
+const Button = ({ text, onClick }) => {
+  return <button onClick={onClick}>{text}</button>;
+};
+
+const App = ({ anecdotes }) => {
   const [selected, setSelected] = useState(0);
 
-  return <div>{props.anecdotes[selected]}</div>;
+  const handleClick = () => {
+    setSelected(Math.floor(Math.random() * anecdotes.length));
+  };
+
+  return (
+    <div>
+      <p>Ancedote: {selected + 1}</p>
+      <p>{anecdotes[selected]}</p>
+      <Button onClick={handleClick} text="generate"></Button>
+    </div>
+  );
 };
 
 const anecdotes = [
