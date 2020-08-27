@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-// 1.12*: anecdotes step1
-// The world of software engineering is filled with anecdotes that distill timeless truths from our field into short one-liners.
-
-// Expand the following application by adding a button that can be clicked to display a random anecdote from the field of software engineering:
+// 1.13*: anecdotes step2
+// Expand your application so that you can vote for the displayed anecdote.
 
 const Button = ({ text, onClick }) => {
   return <button onClick={onClick}>{text}</button>;
@@ -12,16 +10,29 @@ const Button = ({ text, onClick }) => {
 
 const App = ({ anecdotes }) => {
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(Array(6).fill(0));
 
   const handleClick = () => {
     setSelected(Math.floor(Math.random() * anecdotes.length));
+  };
+
+  const handleVotes = () => {
+    //make copy of votes
+    const allVotes = [...votes];
+    //update the state array variable
+    allVotes[selected] += 1;
+    //re-render the page with the new values.
+    setVotes(allVotes);
+    console.log(allVotes);
   };
 
   return (
     <div>
       <p>Ancedote: {selected + 1}</p>
       <p>{anecdotes[selected]}</p>
-      <Button onClick={handleClick} text="generate"></Button>
+      <p>Has {votes[selected]} votes</p>
+      <Button onClick={handleVotes} text="vote"></Button>
+      <Button onClick={handleClick} text="next anecdote"></Button>
     </div>
   );
 };
