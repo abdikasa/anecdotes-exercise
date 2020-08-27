@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-// 1.13*: anecdotes step2
-// Expand your application so that you can vote for the displayed anecdote.
+// 1.14*: anecdotes step3
+// Now implement the final version of the application that displays the anecdote with the largest number of votes:
+// If multiple anecdotes are tied for first place it is sufficient to just show one of them.
 
 const Button = ({ text, onClick }) => {
   return <button onClick={onClick}>{text}</button>;
@@ -26,6 +27,12 @@ const App = ({ anecdotes }) => {
     console.log(allVotes);
   };
 
+  const mostVotes = () => {
+    let max = Math.max(...votes);
+    let index = [...votes].indexOf(max);
+    return [anecdotes[index], max];
+  };
+
   return (
     <div>
       <p>Ancedote: {selected + 1}</p>
@@ -33,6 +40,9 @@ const App = ({ anecdotes }) => {
       <p>Has {votes[selected]} votes</p>
       <Button onClick={handleVotes} text="vote"></Button>
       <Button onClick={handleClick} text="next anecdote"></Button>
+      <hr />
+      <h2>Anecdotes with the most votes ({mostVotes()[1]})</h2>
+      <p>{mostVotes()[0]}</p>
     </div>
   );
 };
